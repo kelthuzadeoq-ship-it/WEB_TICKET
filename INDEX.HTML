@@ -1,98 +1,90 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Sistema de Atendimento com Estimativa de Tempo</title>
+<!DOCTYPE html> <!-- Declara o tipo do documento como HTML5 -->
+<html lang="pt-br"> <!-- Define o idioma da página -->
 
-<style>
+<head> <!-- Cabeçalho do documento -->
+<meta charset="UTF-8"> <!-- Codificação UTF-8 -->
+<title>Sistema de Atendimento com Estimativa de Tempo</title> <!-- Título da aba -->
 
-/* ESTILO GERAL */
-body {
-    font-family: 'Arial', sans-serif;
-    background: #FDF7FF;
-    margin: 0;
-    padding: 20px;
-    color: #5A4E69;
+<style> 
+
+body { /* Corpo da página */
+    font-family: Arial, sans-serif; /* Fonte padrão */
+    background: #f4f4f4; /* Fundo cinza claro */
+    margin: 0; /* Remove margem padrão */
+    padding: 20px; /* Espaçamento interno */
 }
 
-h1, h2, h3 {
-    color: #6C5B7B;
+h1, h2 { /* Títulos */
+    margin: 0 0 15px 0; /* Margem inferior */
 }
 
-.container {
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
+.container { /* Container principal */
+    display: flex; /* Flexbox layout */
+    gap: 25px; /* Espaçamento entre boxes */
+    flex-wrap: wrap; /* Quebra linha em telas pequenas */
 }
 
-.box {
-    background: #FFFFFF;
-    padding: 20px;
-    width: 30%;
-    min-width: 300px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 12px rgba(200, 170, 220, 0.25);
-    border: 2px solid #F2E7FF;
+.box { /* Caixa de cada seção */
+    background: #ffffff; /* Fundo branco */
+    padding: 20px; /* Espaçamento interno */
+    width: 30%; /* Largura da caixa */
+    min-width: 300px; /* Largura mínima */
+    border-radius: 10px; /* Cantos arredondados */
+    box-shadow: 0 0 8px #aaa; /* Sombra */
 }
 
-/* BOTÕES */
-button {
-    padding: 12px 20px;
-    margin-top: 8px;
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    background: linear-gradient(135deg, #FBC2EB, #A6C1EE);
-    color: #4A3D55;
-    box-shadow: 0 3px 8px rgba(150, 120, 200, 0.25);
-    transition: 0.25s ease;
+button { /* Botões */
+    padding: 10px 20px; 
+    margin-top: 8px; 
+    cursor: pointer; 
+    background: #038b0a; 
+    color: white; 
+    border: none; 
+    border-radius: 8px; 
+    font-size: 16px; 
 }
 
-button:hover {
-    filter: brightness(1.12);
-    transform: translateY(-2px);
+button:hover { /* Efeito hover */
+    background: #e3ff41; 
 }
 
-/* PAINEL DE SENHA */
-.painel-senha {
-    background: #FFF1F9;
-    color: #704D77;
-    font-size: 22px;
-    padding: 15px;
-    border-radius: 12px;
-    border: 2px solid #F8D7F0;
-    box-shadow: inset 0 0 8px rgba(255, 200, 230, 0.4);
-    text-align: center;
-    font-weight: bold;
+.painel-senha { /* Painel digital */
+    background: rgb(18, 31, 212); 
+    color: rgb(243, 243, 243); 
+    font-size: 22px; 
+    padding: 15px; 
+    border-radius: 10px; 
+    margin-top: 10px; 
+    text-align: center; 
 }
 
-/* LISTAS */
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+#ultimaSenha, #tempoEstimado, #ultimasChamadas { /* IDs para informações dinâmicas */
+    margin-top: 10px; 
+    font-size: 16px; 
 }
 
-li {
-    padding: 6px 0;
+ul { /* Lista de últimas chamadas */
+    list-style: none; /* Remove marcadores */
+    padding: 0; 
+    margin: 0; 
 }
 
-/* CORES DAS SENHAS */
-.sp { color: #FF6F91; font-weight: bold; }
-.se { color: #6A8DFF; font-weight: bold; }
-.sg { color: #77C67D; font-weight: bold; }
+/* ================== NOVAS CLASSES PARA CORES ================== */
+.sp { color: red; } /* SP (Prioritária) → vermelho */
+.se { color: blue; } /* SE (Exames) → azul */
+.sg { color: rgb(75, 11, 224); } /* SG (Geral) → verde */
 
 </style>
+
 </head>
 
-<body>
+<body> <!-- Corpo da página -->
 
-<h1>Sistema de Atendimento com Estimativa de Tempo</h1>
+<h1>Sistema de Atendimento com Estimativa de Tempo</h1> <!-- Título -->
 
-<div class="container">
+<div class="container"> <!-- Container principal -->
 
-    <!-- TOTEM -->
+    <!-- TOTEM (AC) -->
     <div class="box">
         <h2>Totem – Emissão de Senhas</h2>
 
@@ -100,11 +92,11 @@ li {
         <button onclick="emitirSenha('SE')">SE – Exames</button><br>
         <button onclick="emitirSenha('SG')">SG – Geral</button>
 
-        <div id="ultimaSenha"></div>
-        <div id="tempoEstimado"></div>
+        <div id="ultimaSenha"></div> <!-- Exibe a senha emitida -->
+        <div id="tempoEstimado"></div> <!-- Exibe tempo estimado -->
     </div>
 
-    <!-- ATENDENTE -->
+    <!-- ATENDENTE (AA) -->
     <div class="box">
         <h2>Atendente – Chamar Próximo</h2>
 
@@ -118,13 +110,14 @@ li {
 
         <button onclick="chamarProximo()">Chamar Próximo</button>
 
-        <div id="chamadaAtendente"></div>
-
-        <h3>Últimas 5 chamadas:</h3>
-        <ul id="listaUltimas"></ul>
+        <div id="chamadaAtendente"></div> <!-- Senha chamada no guichê -->
+        <div id="ultimasChamadas">
+            <h3>Últimas 5 chamadas:</h3>
+            <ul id="listaUltimas"></ul> <!-- Lista das últimas 5 chamadas do atendente -->
+        </div>
     </div>
 
-    <!-- PAINEL -->
+    <!-- PAINEL (AS) -->
     <div class="box">
         <h2>Painel</h2>
 
@@ -132,4 +125,177 @@ li {
             Aguardando chamada...
         </div>
 
-        <h3>Ú
+        <div id="ultimasChamadasPainel">
+            <h3>Últimas 5 chamadas:</h3>
+            <ul id="listaUltimasPainel"></ul> <!-- Lista colorida no painel -->
+        </div>
+    </div>
+
+</div>
+
+<script> <!-- Início do JavaScript -->
+
+// FILAS DE SENHAS
+let filaSP = []; // Fila de SP
+let filaSE = []; // Fila de SE
+let filaSG = []; // Fila de SG
+
+// TEMPOS
+let tempos = {}; // Objeto com tempos médios de atendimento
+
+// CONTADORES
+let contador = { SP: 0, SE: 0, SG: 0 }; // Contador de cada tipo de senha
+
+// CICLO DE CHAMADA
+let proximoTipo = "SP"; 
+
+// GUICHÊS
+let guiches = [1,2]; 
+let indiceGuiche = 0; 
+
+// ÚLTIMAS 5 CHAMADAS
+let ultimasChamadas = []; // Para atendente
+let ultimasChamadasPainel = []; // Para painel
+
+// ================== FUNÇÕES ==================
+
+// FUNÇÃO PARA DEFINIR PRÓXIMO GUICHÊ
+function proximoGuiche() {
+    let g = guiches[indiceGuiche]; // Pega guichê atual
+    indiceGuiche = (indiceGuiche + 1) % guiches.length; // Atualiza índice para rodízio
+    return g; // Retorna guichê
+}
+
+// GERAR TEMPO MÉDIO
+function gerarTM(tipo) {
+    if(tipo==="SP"||tipo==="SE") return Math.random()<=0.95?1:5; // 95% 1min, 5% 5min
+    if(tipo==="SG") return 3 + Math.floor(Math.random()*7)-3; // SG 0~6min
+}
+
+// EMITIR SENHA
+function emitirSenha(tipo) {
+    contador[tipo]++; // Incrementa contador
+    let senha = tipo+"-"+contador[tipo]; // Formata senha
+
+    // Adiciona à fila
+    if(tipo==="SP") filaSP.push(senha); 
+    if(tipo==="SE") filaSE.push(senha); 
+    if(tipo==="SG") filaSG.push(senha); 
+
+    tempos[senha] = gerarTM(tipo); // Guarda tempo da senha
+    let guiche = proximoGuiche(); // Define guichê
+
+    // Atualiza Totem
+    document.getElementById("ultimaSenha").innerHTML = 
+        `<p><strong>Sua senha:</strong> ${senha}</p>
+         <p><strong>Dirija-se ao Guichê:</strong> ${guiche}</p>`; 
+
+    let tempo = calcularTempoEspera(senha); // Calcula tempo estimado
+    document.getElementById("tempoEstimado").innerHTML = 
+        `<p><strong>Tempo estimado:</strong> ${tempo} min</p>`; 
+}
+
+// CALCULA TEMPO ESTIMADO
+function calcularTempoEspera(senhaTarget) {
+    let filaSimulada = { SP:[...filaSP], SE:[...filaSE], SG:[...filaSG] }; 
+    let tipoCiclo = proximoTipo; 
+    let totalTempo = 0; 
+
+    while(true) {
+        let senha = null; 
+
+        if(tipoCiclo==="SP") {
+            if(filaSimulada.SP.length>0) { senha=filaSimulada.SP.shift(); tipoCiclo="SESG"; } 
+            else tipoCiclo="SESG"; 
+        }
+
+        if(!senha && tipoCiclo==="SESG") {
+            if(filaSimulada.SE.length>0) { senha=filaSimulada.SE.shift(); tipoCiclo="SP"; } 
+            else if(filaSimulada.SG.length>0) { senha=filaSimulada.SG.shift(); tipoCiclo="SP"; } 
+        }
+
+        if(!senha) break; 
+        if(senha===senhaTarget) return totalTempo; 
+
+        totalTempo += tempos[senha]; 
+    }
+
+    return totalTempo; 
+}
+
+// CHAMAR PRÓXIMO
+function chamarProximo() {
+    let guiche = document.getElementById("guiche").value; 
+    let senha = obterProximaSenha(); 
+
+    if(!senha) { alert("Nenhuma senha na fila."); return; } 
+
+    // Atualiza painel principal
+    document.getElementById("painelDisplay").innerHTML = 
+        `Senha: <strong>${senha}</strong><br>Guichê: <strong>${guiche}</strong>`; 
+
+    // Atualiza área do atendente
+    document.getElementById("chamadaAtendente").innerHTML = 
+        `<p><strong>${senha}</strong> chamado ao Guichê <strong>${guiche}</strong>.</p>`; 
+
+    // Adiciona na lista de últimas chamadas atendente
+    ultimasChamadas.unshift({senha: senha, guiche: guiche}); // Adiciona no início
+    ultimasChamadas = ultimasChamadas.slice(0,5); // Mantém apenas últimos 5
+    atualizarListaUltimas(); // Atualiza HTML do atendente
+
+    // Adiciona na lista do painel
+    ultimasChamadasPainel.unshift({senha: senha, guiche: guiche}); 
+    ultimasChamadasPainel = ultimasChamadasPainel.slice(0,5); 
+    atualizarListaPainel(); // Atualiza HTML do painel
+}
+
+// OBTER PRÓXIMA SENHA
+function obterProximaSenha() {
+    if(proximoTipo==="SP") {
+        if(filaSP.length>0) { proximoTipo="SESG"; return filaSP.shift(); } 
+        proximoTipo="SESG"; 
+    }
+
+    if(proximoTipo==="SESG") {
+        if(filaSE.length>0) { proximoTipo="SP"; return filaSE.shift(); } 
+        if(filaSG.length>0) { proximoTipo="SP"; return filaSG.shift(); } 
+    }
+
+    return null; 
+}
+
+// ================== ATUALIZAR LISTA ATENDENTE ==================
+function atualizarListaUltimas() {
+    let lista = document.getElementById("listaUltimas"); 
+    lista.innerHTML = ""; 
+    ultimasChamadas.forEach(function(item) { 
+        let li = document.createElement("li"); // Cria elemento <li>
+        li.textContent = `${item.senha} - Guichê ${item.guiche}`; // Conteúdo da lista
+        lista.appendChild(li); // Adiciona à lista
+    });
+}
+
+// ================== ATUALIZAR LISTA PAINEL COM CORES ==================
+function atualizarListaPainel() {
+    let lista = document.getElementById("listaUltimasPainel"); 
+    lista.innerHTML = ""; // Limpa lista
+
+    ultimasChamadasPainel.forEach(function(item) { 
+        let li = document.createElement("li"); // Cria elemento <li>
+
+        // Adiciona conteúdo
+        li.textContent = `${item.senha} - Guichê ${item.guiche}`; 
+
+        // Define cor de acordo com o tipo da senha
+        if(item.senha.startsWith("SP")) li.className = "sp"; // SP → vermelho
+        if(item.senha.startsWith("SE")) li.className = "se"; // SE → azul
+        if(item.senha.startsWith("SG")) li.className = "sg"; // SG → verde
+
+        lista.appendChild(li); // Adiciona à lista do painel
+    });
+}
+
+</script>
+
+</body>
+</html>
